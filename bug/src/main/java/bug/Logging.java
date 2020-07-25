@@ -1,39 +1,80 @@
 package bug;
 
+import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Logging 
-{	  
-	   public int Caluclation(String Material_Standard, double Area, String Fully_Auto_Home)
-	   {
-		   if(Material_Standard.contentEquals("High Standard Materials")&& Fully_Auto_Home.contentEquals("Fully Automated Home"))
-		           return(int)(2500*Area);
-		   else if(Material_Standard.equals("Standard Materials"))
-			   return(int)(Area*1200);
-		   else if(Material_Standard.equals("Above Standard Materials"))
-			   return(int)(Area*1500);
-		   else if(Material_Standard.equals("High Standard Materials"))
-			   return(int)(Area*1800);
-		   return 0;
-	   }
-	   
-	   public double Simple(double x, double y,double z,double p)
-	   {
-		    p = p + x * (y/100) * z;
-		    return p;
-	   }
-	   public double Compound(double x, double y,double z,double q)
-	   {
-		   q = q + (x*(Math.pow((1+(z/100)),y)))-x;
-		   return q;
-	   }
-	   private static final Logger LOGGER = LogManager.getLogger(Logging.class);
-	   
-	   public static void main(String[] args)
-	   {
-		   int p=0,q=0;
-		   LOGGER.debug(p+" "+q);
-		   
-	   }
+public class Logging
+{
+	private static final Logger LOGGER = LogManager.getLogger(House.class);
+	private static Scanner sc;
+	private static int type,option,continue_option;
+	private static float total_area_of_house,estimate_amount;	 
+	public static void main( String[] args )
+    {
+		houseConstruction();
+    }
+	
+	private static void houseConstruction()
+	{
+		sc = new Scanner(System.in);
+		HouseEstimationCost obj=new HouseEstimationCost(); 
+		LOGGER.info("---Please enter total area of the house(in square feet)---");
+		total_area_of_house = sc.nextFloat();
+		LOGGER.info("---Enter 1 if you opt for a fully automated house otherwise enter 0---");
+		type=sc.nextInt();
+		if(type==1)
+		{
+			estimate_amount=obj.fullyAutomatedHome(total_area_of_house);
+			LOGGER.info("Your estimated house construction cost is Rs."+estimate_amount);
+			LOGGER.info("Do you want to continue?\nenter 1 to continue otherwise enter 0");
+			continue_option=sc.nextInt();
+			if(continue_option==1)
+				houseConstruction();
+			else
+				LOGGER.info("Thank you");
+		}
+		else if(type==0)
+		{
+			LOGGER.info("---PLease select an option for the type of material to be used for construction---");
+			LOGGER.info("---Enter 1 for standard materials---");
+			LOGGER.info("---Enter 2 for above standard materials---");
+			LOGGER.info("---Enter 3 for high standard material---");
+			option=sc.nextInt();
+			if(option==1)
+			{
+				estimate_amount=obj.Home(total_area_of_house,1200);
+				LOGGER.info("Your estimated house construction cost is Rs."+estimate_amount);
+				LOGGER.info("Do you want to continue?\\nenter 1 to continue otherwise enter 0");
+				continue_option=sc.nextInt();
+				if(continue_option==1)
+					houseConstruction();
+				else
+					LOGGER.info("Thank you");
+			}
+			else if(option==2)
+			{
+				estimate_amount=obj.Home(total_area_of_house,1500);
+				LOGGER.info("Your estimated house construction cost is Rs."+estimate_amount);
+				LOGGER.info("Do you want to continue?\nenter 1 to continue otherwise enter 0");
+				continue_option=sc.nextInt();
+				if(continue_option==1)
+					houseConstruction();
+				else
+					LOGGER.info("Thank you");
+			}
+			else if(option==3)
+			{
+				estimate_amount=obj.Home(total_area_of_house,1800);
+				LOGGER.info("Your estimated house construction cost is Rs."+estimate_amount);
+				LOGGER.info("Do you want to continue?\\nenter 1 to continue otherwise enter 0");
+				continue_option=sc.nextInt();
+				if(continue_option==1)
+					houseConstruction();
+				else
+					LOGGER.info("Thank you");
+			}
+		}
+		
+	}
 }
